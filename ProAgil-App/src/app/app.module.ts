@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BsDropdownModule, ModalModule, TooltipModule } from 'ngx-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Serviço
 
@@ -23,7 +23,8 @@ import { DateTimeFormartPipePipe } from './_helps/DateTimeFormartPipe.pipe';
       AppComponent,
       EventosComponent,
       NavComponent,
-      DateTimeFormartPipePipe
+      DateTimeFormartPipePipe,
+      ReactiveFormsModule,
    ],
    imports: [
       BrowserModule,
