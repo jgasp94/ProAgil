@@ -24,7 +24,8 @@ export class EventosComponent implements OnInit {
   // tslint:disable-next-line: variable-name
   _friltroLista: string;
   registerForm: FormGroup;
-  
+  bodyDeletarEvento: string;
+
   constructor(
     private eventoService: EventoService
     , private modalService: BsModalService
@@ -132,5 +133,21 @@ export class EventosComponent implements OnInit {
                   );
               }
             }
+          }
+          excluirEvento(evento: Evento,  confirmTemplate: any){
+            this.openModal(confirmTemplate);
+            this.evento = evento;
+            this.bodyDeletarEvento = `Tem certeza que deseja excluir o Evento: ${evento.id} - ${evento.tema}`;
+          }
+          confirmeDelete(comfirm: any){
+            this.eventoService.deleteEvento(this.evento).subscribe(
+              () => {
+                comfirm.hide();
+                this.getEventos();
+              },
+              error => {
+                console.log(error);
+              }
+            )
           }
         }

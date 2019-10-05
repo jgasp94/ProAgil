@@ -25,4 +25,7 @@ constructor(private http: HttpClient) { }
   putEvento(evento: Evento) {
     return this.http.put(`${this.baseURL}/${evento.id}`, evento);
   }
+  deleteEvento(evento: Evento) {
+    return this.http.delete(`${this.baseURL}/${evento.id}`);
+  }
 }
