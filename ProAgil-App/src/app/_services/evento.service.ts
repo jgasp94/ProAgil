@@ -16,7 +16,13 @@ constructor(private http: HttpClient) { }
   getEventoByTema(tema: string): Observable<Evento[]> {
     return this.http.get<Evento[]>(`${this.baseURL}/getByTema/${tema}`);
   }
-  getEventoById(id: number): Observable<Evento[]> {
-    return this.http.get<Evento[]>(`${this.baseURL}/${id}`);
+  getEventoById(id: number): Observable<Evento> {
+    return this.http.get<Evento>(`${this.baseURL}/${id}`);
+  }
+  postEvento(evento: Evento) {
+    return this.http.post(this.baseURL, evento);
+  }
+  putEvento(evento: Evento) {
+    return this.http.put(`${this.baseURL}/${evento.id}`, evento);
   }
 }

@@ -9,6 +9,8 @@ export interface Evento {
     tema: string;
     qtdPessoas: number;
     imagemUrl: string;
+    telefone: string;
+    email: string;
     lotes: Lote[];
     redeSociais: RedeSocial[];
     palestranteEventos: Evento[];
