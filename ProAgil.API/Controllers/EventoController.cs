@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProAgil.API.Dtos;
 using ProAgil.Domain.Entities;
 using ProAgil.Repository.Interface;
 
@@ -11,24 +14,28 @@ namespace ProAgil.API.Controllers
     public class EventoController : ControllerBase
     {
         private readonly IProAgilRepository _repository;
+        public readonly IMapper _mapper;
 
-        public EventoController(IProAgilRepository repository)
+        public EventoController(IProAgilRepository repository, IMapper mapper)
         {
+            _mapper = mapper;
             _repository = repository;
         }
-#region Gets
+        #region Gets
 
         [HttpGet]
-        public async Task <IActionResult> Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var response = await _repository.GetAllEventoAsync(true);
-                return Ok(response);                
+                var eventos = await _repository.GetAllEventoAsync(true);
+                var response = _mapper.Map<IEnumerable<EventoDTO>>(eventos);
+                
+                return Ok(response);
             }
             catch (System.Exception)
             {
-                
+
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Problemas no banco de dados");
             }
         }
@@ -61,7 +68,7 @@ namespace ProAgil.API.Controllers
             }
         }
         #endregion
-//Insert
+        //Insert
         [HttpPost]
         public async Task<ActionResult> Post(Evento evento)
         {
@@ -69,9 +76,9 @@ namespace ProAgil.API.Controllers
             {
                 _repository.Add(evento);
 
-                if(await _repository.SaveChangeAsync())                
+                if (await _repository.SaveChangeAsync())
                     return Created($"api/evento/{evento.Id}", evento);
-                
+
             }
             catch (System.Exception)
             {
@@ -81,19 +88,19 @@ namespace ProAgil.API.Controllers
             return BadRequest();
         }
 
-    //Update
+        //Update
         [HttpPut("{EventoId}")]
         public async Task<IActionResult> Put(int EventoId, Evento evento)
         {
             try
             {
                 var response = await _repository.GetEventoAsyncById(EventoId, false);
-                
-                if(response.Equals(null)) return StatusCode(StatusCodes.Status404NotFound, "O evento não existe");
+
+                if (response.Equals(null)) return StatusCode(StatusCodes.Status404NotFound, "O evento não existe");
 
                 _repository.Update(evento);
-                
-                if(await _repository.SaveChangeAsync())
+
+                if (await _repository.SaveChangeAsync())
                     return Created($"/api/evento/{evento.Id}", evento);
             }
             catch (System.Exception)
@@ -103,19 +110,19 @@ namespace ProAgil.API.Controllers
             return BadRequest();
         }
 
-    //Delete - Bêbado
-    [HttpDelete("{EventoId}")]
+        //Delete - Bêbado
+        [HttpDelete("{EventoId}")]
         public async Task<IActionResult> Delete(int EventoId)
         {
             try
             {
-                var response = await _repository.GetEventoAsyncById(EventoId, false);               
-                
-                if(response.Equals(null))return StatusCode(StatusCodes.Status404NotFound, "Registro não exite");
-                
-                _repository.Delete(response);       
+                var response = await _repository.GetEventoAsyncById(EventoId, false);
 
-                if(await _repository.SaveChangeAsync())return Ok();
+                if (response.Equals(null)) return StatusCode(StatusCodes.Status404NotFound, "Registro não exite");
+
+                _repository.Delete(response);
+
+                if (await _repository.SaveChangeAsync()) return Ok();
             }
             catch (System.Exception)
             {
