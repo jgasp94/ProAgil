@@ -1,9 +1,0 @@
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\bin\Debug\netstandard2.0\ProAgil.Domain.deps.json
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\bin\Debug\netstandard2.0\ProAgil.Domain.dll
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\bin\Debug\netstandard2.0\ProAgil.Domain.pdb
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\obj\Debug\netstandard2.0\ProAgil.Domain.csproj.CoreCompileInputs.cache
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\obj\Debug\netstandard2.0\ProAgil.Domain.AssemblyInfoInputs.cache
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\obj\Debug\netstandard2.0\ProAgil.Domain.AssemblyInfo.cs
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\obj\Debug\netstandard2.0\ProAgil.Domain.dll
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\obj\Debug\netstandard2.0\ProAgil.Domain.pdb
-C:\git\lab_estudos\DotNetCore_Udemy\ProAgil.Domain\obj\Debug\netstandard2.0\ProAgil.Domain.csprojAssemblyReference.cache
