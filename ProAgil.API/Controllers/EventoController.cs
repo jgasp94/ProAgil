@@ -45,7 +45,8 @@ namespace ProAgil.API.Controllers
         {
             try
             {
-                var response = await _repository.GetEventoAsyncById(Eventoid, true);
+                var evento = await _repository.GetEventoAsyncById(Eventoid, true);
+                var response = _mapper.Map<EventoDTO>(evento);
                 return Ok(response);
             }
             catch (System.Exception)
@@ -59,7 +60,9 @@ namespace ProAgil.API.Controllers
         {
             try
             {
-                var response = await _repository.GetAllEventoAsyncByTema(tema, true);
+                var eventos = await _repository.GetAllEventoAsyncByTema(tema, true);
+                var response = _mapper.Map<IEnumerable<EventoDTO>>(eventos);
+
                 return Ok(response);
             }
             catch (System.Exception)
@@ -70,11 +73,12 @@ namespace ProAgil.API.Controllers
         #endregion
         //Insert
         [HttpPost]
-        public async Task<ActionResult> Post(Evento evento)
+        public async Task<ActionResult> Post(EventoDTO evento)
         {
             try
             {
-                _repository.Add(evento);
+                var eventoDto = _mapper.Map<Evento>(evento);
+                _repository.Add(eventoDto);
 
                 if (await _repository.SaveChangeAsync())
                     return Created($"api/evento/{evento.Id}", evento);

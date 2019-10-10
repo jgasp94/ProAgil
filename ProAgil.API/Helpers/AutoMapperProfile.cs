@@ -13,7 +13,7 @@ namespace ProAgil.API.Helpers
                 .ForMember(dest => dest.Palestrante, 
                     opt => {
                         opt.MapFrom(src => src.PalestranteEventos.Select(x => x.Palestrante).ToList());
-                    });
+                    }).ReverseMap();
 
             CreateMap<Palestrante , PalestranteDTO>()
                 .ForMember(dest => dest.Evento,
@@ -21,11 +21,11 @@ namespace ProAgil.API.Helpers
                         opt.MapFrom(
                             src => src.PalestranteEventos.Select(x => x.Evento).ToList()
                         );
-                    });
+                    }).ReverseMap();
                     
 
-            CreateMap<Lote, LoteDTO>();
-            CreateMap<RedeSocial, RedeSocialDTO>();
+            CreateMap<Lote, LoteDTO>().ReverseMap();
+            CreateMap<RedeSocial, RedeSocialDTO>().ReverseMap();
         }
     }
 }
