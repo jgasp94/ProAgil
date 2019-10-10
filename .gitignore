@@ -480,3 +480,4 @@ Desktop.ini
 ### OpenFrameworks+VisualStudio Patch ###
 
 # End of https://www.gitignore.io/api/csharp,dotnetcore,openframeworks+visualstudio
+ProAgil.API/ProAgil.db

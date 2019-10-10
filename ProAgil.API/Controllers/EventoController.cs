@@ -81,12 +81,12 @@ namespace ProAgil.API.Controllers
                 _repository.Add(eventoDto);
 
                 if (await _repository.SaveChangeAsync())
-                    return Created($"api/evento/{evento.Id}", evento);
+                    return Created($"api/evento/{evento.Id}", _mapper.Map<EventoDTO>(eventoDto));
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Hove um erro na requisição");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Hove um erro na requisição: {ex.Message}");
             }
 
             return BadRequest();
@@ -100,12 +100,14 @@ namespace ProAgil.API.Controllers
             {
                 var response = await _repository.GetEventoAsyncById(EventoId, false);
 
-                if (response.Equals(null)) return StatusCode(StatusCodes.Status404NotFound, "O evento não existe");
+                if (response.Equals(null)) return NotFound();
 
+                
+                _mapper.Map(response, evento);
                 _repository.Update(evento);
 
                 if (await _repository.SaveChangeAsync())
-                    return Created($"/api/evento/{evento.Id}", evento);
+                    return Created($"/api/evento/{evento.Id}", _mapper.Map<EventoDTO>(evento));
             }
             catch (System.Exception)
             {
