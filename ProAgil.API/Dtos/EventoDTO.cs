@@ -17,7 +17,7 @@ namespace ProAgil.API.Dtos
         [EmailAddress]
         [Required(ErrorMessage="O campo {0} é obrigatório")]
         public string Email { get; set; }
-        public List<LoteDTO> Lote { get; set; }
+        public List<LoteDTO> Lotes { get; set; }
         public List<RedeSocialDTO> RedeSociais { get; set; }
         public List<PalestranteDTO> Palestrante{ get; set; }
     }
