@@ -112,8 +112,8 @@ namespace ProAgil.API.Controllers
                         file.CopyTo(stream);
 
                     }
+                    return Ok();
                 }                
-                return Ok();
             }
             catch (System.Exception)
             {
