@@ -1,14 +1,14 @@
+<app-titulo [titulo] = "tituloPagina"></app-titulo>
 <div class="d-flex">
   <div class="form-inline mr-auto" action="">
     <div class="form-group mb-2">
-      <label class="mr-2">Filtro:</label> <input type="text" class="form-control mr-2" placeholder="Buscar" [(ngModel)]="friltroLista" >
+      <label class="mr-2">Filtro:</label> <input type="text" class="form-control mr-2" placeholder="Buscar" [(ngModel)]="filtroLista" >
     </div>
   </div>
   <div class="btn btn-outline-primary" (click)="novoEvento(template)">
     <i class="fa fa-plus-circle"></i>&nbsp; Novo evento
   </div>
 </div>
-<h3>Filtro: {{friltroLista}}</h3>
 <table class="table table-striped">
   <thead class="thead-ligth">
     <tr>
@@ -16,8 +16,8 @@
         <button class="btn btn-outline-primary" 
         (click)="this.alternarImg()"> 
         <i class="{{mostrarImg ? 'fa fa-eye-slash' : 'fa fa-eye'}}"></i>
-      </button>
-    </th>
+      </button>      
+      </th>
     <th>#</th>
     <th>Tema</th>
     <th>Local</th>
@@ -31,7 +31,7 @@
   <tr *ngFor="let evento of this.eventosFiltrados">
     <td>
       <img *ngIf="mostrarImg"
-      src="http://localhost:5000/img/{{evento.imagemUrl}}" alt="" 
+      src="http://localhost:5000/resources/images/{{evento.imagemUrl}}" alt="" 
       [style.width.px]="imgLargura"
       [style.margin.px]="imgMargem">
     </td>
@@ -72,7 +72,7 @@ role="dialog" aria-labelledby="dialog-sizes-name1">
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <h4 id="dialog-sizes-name1" class="modal-title pull-left">Large modal</h4>
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">{{ this.titleModal }}</h4>
       <button type="button" class="close pull-right" (click)="template.hide()" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -129,10 +129,19 @@ role="dialog" aria-labelledby="dialog-sizes-name1">
           </div>
           <div class="form-group col-md-9">
             <label>Imagem</label>
-            <input type="text" [ngClass]="{'is-invalid' : registerForm.get('imagemUrl').errors && registerForm.get('imagemUrl').touched }" class="form-control" formControlName="imagemUrl" placeholder="">
-            <div *ngIf="registerForm.get('imagemUrl').hasError('required') && registerForm.get('imagemUrl').touched" class="invalid-feedback">
-              A Imagem é obrigatório.
-            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>                    
+                    <button class="btn btn-success" (click)="fileImg.click()">Inserir Imagem</button>
+                    <input type="file" #fileImg [ngClass]="{'is-invalid' : registerForm.get('imagemUrl').errors && registerForm.get('imagemUrl').touched }" class="form-control" formControlName="imagemUrl" style="display: none;" (change)="enviarImagem($event)">
+                    <div *ngIf="registerForm.get('imagemUrl').hasError('required') && registerForm.get('imagemUrl').touched" class="invalid-feedback">
+                      A Imagem é obrigatória.
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>  
         <div class="form-row">
