@@ -21,7 +21,7 @@ export class EventosComponent implements OnInit {
   eventos: Evento[];
   evento: Evento;
   typeRequester: string;
-  titleModal : string;  
+  titleModal : string;
   imgLargura = 50;
   imgMargem = 2;
   mostrarImg = false;
@@ -36,7 +36,7 @@ export class EventosComponent implements OnInit {
     , private modalService: BsModalService
     , private fb: FormBuilder
     , private locale: BsLocaleService
-    , private toastr : ToastrService 
+    , private toastr : ToastrService
     ) {
       this.locale.use('pt-br');
     }
@@ -59,12 +59,13 @@ export class EventosComponent implements OnInit {
     alternarImg() {
       this.mostrarImg = !this.mostrarImg;
     }
-    enviarImagem(event: Event ){
-      this.arq = event.srcElement.files;
-      console.log(this.arq); 
-    } 
+    enviarImagem(event){
+      const reader = new FileReader();
+      this.arq = event.target.files;
+      console.log(this.arq);
+    }
     editarEvento(template: any, evento: Evento) {
-      this.openModal(template);      
+      this.openModal(template);
       this.typeRequester = 'PUT';
       this.evento = Object.assign({}, evento);
       this.nomeArq = evento.imagemUrl.toString();
@@ -106,7 +107,7 @@ export class EventosComponent implements OnInit {
         // tslint:disable-next-line: variable-name
         (_eventos: Evento[]) => {
           this.eventos = _eventos;
-          this.eventosFiltrados = this.eventos;        
+          this.eventosFiltrados = this.eventos;
         }, error => {
           this.toastr.error(`Erro ao tentar Carregar eventos: ${error}`);
         }
@@ -121,7 +122,7 @@ export class EventosComponent implements OnInit {
         salvarAlteracao(template: any) {
           if (this.registerForm.valid) {
             if (this.typeRequester.toUpperCase() === 'POST') {
-              this.evento = Object.assign({}, this.registerForm.value);          
+              this.evento = Object.assign({}, this.registerForm.value);
               this.eventoService.postUpload(this.arq, this.arq[0].name).subscribe(
                 ()=>{
                   this.getEventos();
@@ -140,19 +141,19 @@ export class EventosComponent implements OnInit {
                   error => {
                     this.toastr.error(`Ocorreu o seguinte erro: ${error}`);
                   }
-                  );            
+                  );
                 } else {
-                  this.evento = Object.assign({ id: this.evento.id }, this.registerForm.value);                  
-                  this.evento.imagemUrl = this.nomeArq;                 
+                  this.evento = Object.assign({ id: this.evento.id }, this.registerForm.value);
+                  this.evento.imagemUrl = this.nomeArq;
                   const nomeArquivo = this.evento.imagemUrl.split('\\', 3);
                   this.evento.imagemUrl = nomeArquivo[2];
                   this.eventoService.postUpload(this.arq, nomeArquivo[2]).subscribe(
-                    ()=>{    
-                      this.getEventos();                  
-                    }, 
+                    ()=>{
+                      this.getEventos();
+                    },
                     error => {
                       this.toastr.error(`Erro ao atualizar imagem: ${error}`);
-                    }  
+                    }
                     );
                     this.eventoService.putEvento(this.evento).subscribe(
                       () => {
@@ -175,7 +176,7 @@ export class EventosComponent implements OnInit {
                 confirmeDelete(comfirm: any) {
                   this.eventoService.deleteEvento(this.evento).subscribe(
                     () => {
-                      comfirm.hide();        
+                      comfirm.hide();
                       this.getEventos();
                       this.toastr.success('Usuário apagado com sucesso');
                     },
@@ -183,5 +184,5 @@ export class EventosComponent implements OnInit {
                       this.toastr.error(`Ocorreu o seguinte erro: ${error}`);
                     }
                     )
-                  }  
+                  }
                 }
